@@ -68,6 +68,43 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
+// （↓↓↓↓）mock 假数据
+var express = require('express');
+var apiServer = express();
+var bodyParser = require('body-parser');
+apiServer.use(bodyParser.urlencoded({ extended: true }));
+apiServer.use(bodyParser.json());
+var apiRouter = express.Router();
+var fs = require('fs');
+apiRouter.route('/:apiName') //接口路径
+  .all(function (req, res) {
+    fs.readFile('./data.json', 'utf8', function (err, data) {  //读取接口文件
+      if (err) {
+        throw err
+      };
+      var data = JSON.parse(data);
+      if (data[req.params.apiName.slice(1)]) {
+        res.json({
+          code: 0,
+          data: data[req.params.apiName.slice(1)]
+        });
+      } else {
+        res.send('no such api name')
+      }
+
+    })
+  });
+
+apiServer.use('/api', apiRouter);
+apiServer.listen(3000, function (err) {
+  if (err) {
+    console.log(err)
+    return
+  }
+  console.log('Listening at http://localhost:' + 3000 + '\n')
+});
+// （↑↑↑↑）mock 假数据
+
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
   portfinder.getPort((err, port) => {
