@@ -26,6 +26,16 @@ export default {
 };
 </script>
 
-<style>
-
+<style lang="less">
+#app {
+  .tab {
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    .tab-item {
+      flex: 1;
+      text-align: center;
+    }
+  }
+}
 </style>
