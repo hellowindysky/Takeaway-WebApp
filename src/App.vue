@@ -4,13 +4,19 @@
     <e-header></e-header>
 
     <div class="tab">
-      <div class="tab-item">商品</div>
-      <div class="tab-item">评论</div>
-      <div class="tab-item">商家</div>
+      <div class="tab-item">
+        <router-link to="/goods">商品</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/ratings">评论</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/seller">商家</router-link>
+      </div>
     </div>
 
     <div class="content">
-      I am content!
+      <router-view></router-view>
     </div>
 
   </div>
@@ -32,9 +38,17 @@ export default {
     display: flex;
     height: 40px;
     line-height: 40px;
+    border-bottom: 1px solid gray;
     .tab-item {
       flex: 1;
       text-align: center;
+      >a {
+        display: block;
+        font-size: 14px;
+        &.router-link-exact-active.router-link-active {
+          color: #f01414;
+        }
+      }
     }
   }
 }
