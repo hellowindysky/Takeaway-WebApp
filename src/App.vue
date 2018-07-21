@@ -25,6 +25,11 @@
 <script>
 import eHeader from '@/components/eheader/eHeader';
 export default {
+  data() {
+    return {
+      seller: {}
+    }
+  },
   name: 'App',
   components: {
     eHeader
