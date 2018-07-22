@@ -2,7 +2,13 @@ import axios from 'axios';
 
 export function encapsulatePromise(url, request) {
   var promise = new Promise(function(resolve, reject) {
-    axios.post(url, request).then(function(res) {
+
+    var config = {
+      baseURL: 'http://localhost:3000/api/',
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      withCredentials: false
+    };
+    axios.post(url, request, config).then(function(res) {
       if (res.data.code === 0) {
         resolve(res.data.data);
       }

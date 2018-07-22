@@ -23,16 +23,25 @@
 </template>
 
 <script>
+import { seller } from '@/api/apprequest';
+
 import eHeader from '@/components/eheader/eHeader';
 export default {
   data() {
     return {
       seller: {}
-    }
+    };
   },
   name: 'App',
   components: {
     eHeader
+  },
+  mounted() {
+    seller().then((res) => {
+      console.log(res);
+    }, (err) => {
+      console.log(err);
+    });
   }
 };
 </script>
