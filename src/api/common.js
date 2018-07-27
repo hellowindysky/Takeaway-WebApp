@@ -4,9 +4,9 @@ export function encapsulatePromise(url, request) {
   var promise = new Promise(function(resolve, reject) {
 
     var config = {
-      baseURL: 'http://localhost:3000/api/',
-      headers: {'X-Requested-With': 'XMLHttpRequest'},
-      withCredentials: false
+      // baseURL: 'http://localhost:3000/api/',
+      // headers: {'X-Requested-With': 'XMLHttpRequest'},
+      // withCredentials: false
     };
     axios.post(url, request, config).then(function(res) {
       if (res.data.code === 0) {
