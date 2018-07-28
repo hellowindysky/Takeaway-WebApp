@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <e-header></e-header>
+    <e-header :seller="seller"></e-header>
 
     <div class="tab">
       <div class="tab-item">
@@ -36,18 +36,25 @@ export default {
   components: {
     eHeader
   },
-  mounted() {
+  created() {
     seller().then((res) => {
-      console.log(res);
+      this.seller = Object.assign({}, res);
     }, (err) => {
       console.log(err);
     });
+  },
+  mounted() {
+    setTimeout(() => {
+      console.log(this.seller);
+    }, 0);
   }
 };
 </script>
 
 <style lang="less">
 #app {
+  font-weight: 200;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   .tab {
     display: flex;
     height: 40px;
