@@ -17,17 +17,27 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div v-if="seller.supports" class="support-count" @click="showDetail">
         <span class="count">{{seller.supports.length}}个</span>
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showDetail">
       <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
     </div>
     <div class="background">
       <img width="100%" height="180%" :src="seller.avatar">
+    </div>
+    <div v-show="detailShow" class="detail">
+      <div class="detail-wrapper clearfix">
+        <div class="detail-main">
+          <h1 class="name">{{seller.name}}</h1>
+        </div>
+      </div>
+      <div class="detai-close">
+        <i class="icon-close"></i>
+      </div>
     </div>
   </div>
 </template>
@@ -42,17 +52,36 @@ export default {
   },
   data() {
     return {
+      detailShow: false,
       classMap: ['decrease', 'discount', 'guarantee', 'invioce', 'special']
     };
+  },
+  methods: {
+    showDetail() {
+      this.detailShow = true;
+    }
   }
 };
 </script>
 
 <style lang="less">
+@import "~styles/variables.less";
 .bg-image(@url2, @url3) {
   background-image: url(@url2);
   @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3) {
     background-image: url(@url3);
+  }
+}
+
+.clearfix {
+  display: inline-block;
+  &:after {
+    display: block;
+    content: ".";
+    height: 0;
+    line-height: 0;
+    clear: both;
+    visibility: hidden;
   }
 }
 
@@ -194,6 +223,37 @@ export default {
     height: 100%;
     filter: blur(10px);
     overflow: hidden;
+  }
+  .detail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(7,17,27,0.8);
+    .detail-wrapper {
+      min-height: 100%;
+      width: 100%;
+      .detail-main {
+        margin-top: 64px;
+        padding-bottom: 64px;
+        .name {
+          line-height: 16px;
+          text-align: center;
+          font-size: 16px;
+          font-weight: 700;
+        }
+      }
+    }
+    .detai-close {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      margin: -64px auto 0 auto;
+      font-size: 32px;
+    }
   }
 }
 </style>
