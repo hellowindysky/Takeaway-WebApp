@@ -33,6 +33,20 @@
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper">
+            <star :size="48" :score="seller.score"></star>
+          </div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>
+          <ul v-if="seller.supports" class="supports">
+            <li class="support-item" v-for="(item,index) in seller.supports" :key="index">
+              <span class="icon" :class="classMap[item.type]"></span>
+              <span class="text">{{item.description}}</span>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="detai-close">
@@ -43,6 +57,7 @@
 </template>
 
 <script>
+import star from 'components/star/star';
 export default {
   props: {
     seller: {
@@ -56,6 +71,9 @@ export default {
       classMap: ['decrease', 'discount', 'guarantee', 'invioce', 'special']
     };
   },
+  components: {
+    star
+  },
   methods: {
     showDetail() {
       this.detailShow = true;
@@ -65,7 +83,6 @@ export default {
 </script>
 
 <style lang="less">
-@import "~styles/variables.less";
 .bg-image(@url2, @url3) {
   background-image: url(@url2);
   @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3) {
@@ -244,6 +261,28 @@ export default {
           text-align: center;
           font-size: 16px;
           font-weight: 700;
+        }
+        .star-wrapper {
+          margin-top: 18px;
+          padding: 2px 0;
+          text-align: center;
+        }
+        .title {
+          display: flex;
+          align-items: center;
+          width: 80%;
+          margin: 28px auto 24px;
+          .line {
+            height: 0;
+            flex: 1;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+          }
+          .text {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+          }
         }
       }
     }
