@@ -23,9 +23,11 @@
       </div>
     </div>
     <div class="bulletin-wrapper">
-      <span class="bulletin-title"></span>
-      <span class="bulletin-text">{{seller.bulletin}}</span>
+      <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <div class="background">
+      <img width="100%" height="180%" :src="seller.avatar">
     </div>
   </div>
 </template>
@@ -57,6 +59,8 @@ export default {
 .header {
   color: #fff;
   background-color: rgba(7, 17, 27, 0.5);
+  position: relative;
+  overflow: hidden;
   .content-wrapper {
     position: relative;
     padding: 24px 12px 18px 24px;
@@ -149,6 +153,47 @@ export default {
         font-size: 10px;
       }
     }
+  }
+  .bulletin-wrapper {
+    // font-size: 0;会影响文字省略号，所以不用
+    position: relative;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 22px 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: rgba(7,17,27,0.2);
+    .bulletin-title {
+      display: inline-block;
+      vertical-align: middle;
+      width: 22px;
+      height: 12px;
+      .bg-image('bulletin@2x.png', 'bulletin@3x.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .bulletin-text {
+      vertical-align: middle;
+      margin: 0 4px;
+      font-size: 10px;
+    }
+    .icon-keyboard_arrow_right {
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      font-size: 10px;
+    }
+  }
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    filter: blur(10px);
+    overflow: hidden;
   }
 }
 </style>
