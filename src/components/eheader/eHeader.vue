@@ -29,30 +29,40 @@
     <div class="background">
       <img width="100%" height="180%" :src="seller.avatar">
     </div>
-    <div v-show="detailShow" class="detail">
-      <div class="detail-wrapper clearfix">
-        <div class="detail-main">
-          <h1 class="name">{{seller.name}}</h1>
-          <div class="star-wrapper">
-            <star :size="48" :score="seller.score"></star>
+    <transition name="fade">
+      <div v-show="detailShow" class="detail">
+        <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+            <h1 class="name">{{seller.name}}</h1>
+            <div class="star-wrapper">
+              <star :size="48" :score="seller.score"></star>
+            </div>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">优惠信息</div>
+              <div class="line"></div>
+            </div>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="(item,index) in seller.supports" :key="index">
+                <span class="icon" :class="classMap[item.type]"></span>
+                <span class="text">{{item.description}}</span>
+              </li>
+            </ul>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">商家公告</div>
+              <div class="line"></div>
+            </div>
+            <div class="bulletin">
+              <p class="content">{{seller.bulletin}}</p>
+            </div>
           </div>
-          <div class="title">
-            <div class="line"></div>
-            <div class="text">优惠信息</div>
-            <div class="line"></div>
-          </div>
-          <ul v-if="seller.supports" class="supports">
-            <li class="support-item" v-for="(item,index) in seller.supports" :key="index">
-              <span class="icon" :class="classMap[item.type]"></span>
-              <span class="text">{{item.description}}</span>
-            </li>
-          </ul>
+        </div>
+        <div class="detai-close" @click="hideDetail">
+          <i class="icon-close"></i>
         </div>
       </div>
-      <div class="detai-close">
-        <i class="icon-close"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -77,6 +87,9 @@ export default {
   methods: {
     showDetail() {
       this.detailShow = true;
+    },
+    hideDetail() {
+      this.detailShow = false;
     }
   }
 };
@@ -284,6 +297,55 @@ export default {
             text-align: center;
           }
         }
+        .supports {
+          width: 80%;
+          margin: 0 auto;
+          .support-item {
+            padding: 0 12px;
+            margin-bottom: 12px;
+            font-size: 0;
+            &:last-child {
+              margin-bottom: 0;
+            }
+            .icon {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              vertical-align: top;
+              margin-right: 6px;
+              background-size: 16px 16px;
+              background-repeat: no-repeat;
+              &.decrease {
+                .bg-image('decrease_2@2x.png', 'decrease_2@3x.png');
+              }
+              &.discount {
+                .bg-image('discount_2@2x.png', 'discount_2@3x.png');
+              }
+              &.guarantee {
+                .bg-image('guarantee_2@2x.png', 'guarantee_2@3x.png');
+              }
+              &.invioce {
+                .bg-image('invoice_2@2x.png', 'invoice_2@3x.png');
+              }
+              &.special {
+                .bg-image('special_2@2x.png', 'special_2@3x.png');
+              }
+            }
+            .text {
+              line-height: 16px;
+              font-size: 12px;
+            }
+          }
+        }
+        .bulletin {
+          width: 80%;
+          margin: 0 auto;
+          .content {
+            padding: 0 12px;
+            line-height: 24px;
+            font-size: 12px;
+          }
+        }
       }
     }
     .detai-close {
@@ -295,4 +357,27 @@ export default {
     }
   }
 }
+
+// ------
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: all 300ms;
+}
+// .fade-leave {
+//   opacity: 1;
+// }
+.fade-leave-active {
+  transition: all 300ms;
+  opacity: 0;
+}
+
+// 官网class
+// .fade-enter-active, .fade-leave-active {
+//   transition: opacity 2s;
+// }
+// .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+//   opacity: 0;
+// }
 </style>
