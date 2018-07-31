@@ -45,7 +45,7 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      console.log(this.seller);
+      // console.log(this.seller);
     }, 0);
   }
 };
