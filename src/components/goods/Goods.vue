@@ -3,7 +3,8 @@
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
         <li class="menu-item" v-for="(item,index) in goods" :key="index"
-         :class="{ 'current': currentIndex==index }">
+         :class="{ 'current': currentIndex===index }"
+         @click="selectMenu(index, $event)">
           <span class="text border-1px">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>
             {{item.name}}
@@ -39,6 +40,7 @@
         </li>
       </ul>
     </div>
+    <shop-cart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shop-cart>
   </div>
 </template>
 
@@ -46,12 +48,17 @@
 import BScroll from 'better-scroll';
 import { goods } from '@/api/apprequest';
 
+import shopCart from 'components/shopcart/shopCart';
+
 export default {
   props: {
     seller: {
       type: Object,
       default: () => {}
     }
+  },
+  components: {
+    shopCart
   },
   data() {
     return {
@@ -75,7 +82,9 @@ export default {
   },
   methods: {
     _initScroll() {
-      this.menuScroll = new BScroll(this.$refs.menuWrapper, {});
+      this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      });
       this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
         probeType: 3
       });
@@ -92,6 +101,14 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       }
+    },
+    selectMenu(index, e) {
+      if (!e._constructed) {
+        return;
+      }
+      let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
+      let el = foodList[index];
+      this.foodsScroll.scrollToElement(el, 300);
     }
   },
   created() {
@@ -107,7 +124,7 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      console.log(this.goods);
+      // console.log(this.goods);
     }, 1000);
   }
 };
